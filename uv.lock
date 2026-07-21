@@ -354,7 +354,7 @@ dependencies = [
 ]
 
 [package.optional-dependencies]
-webhook = [
+fastapi = [
     { name = "maxapi", extra = ["webhook"] },
 ]
 
@@ -367,17 +367,17 @@ dev = [
 
 [package.metadata]
 requires-dist = [
-    { name = "maxapi" },
-    { name = "maxapi", extras = ["webhook"], marker = "extra == 'webhook'" },
-    { name = "python-dotenv" },
+    { name = "maxapi", specifier = ">=1.2.1,<2" },
+    { name = "maxapi", extras = ["webhook"], marker = "extra == 'fastapi'", specifier = ">=1.2.1,<2" },
+    { name = "python-dotenv", specifier = ">=1.2.2,<2" },
 ]
-provides-extras = ["webhook"]
+provides-extras = ["fastapi"]
 
 [package.metadata.requires-dev]
 dev = [
-    { name = "pytest" },
-    { name = "pytest-asyncio" },
-    { name = "ruff" },
+    { name = "pytest", specifier = ">=9.1.1,<10" },
+    { name = "pytest-asyncio", specifier = ">=1.4.0,<2" },
+    { name = "ruff", specifier = ">=0.15.22,<0.16" },
 ]
 
 [[package]]

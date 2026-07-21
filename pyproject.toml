@@ -4,18 +4,21 @@ version = "0.1.0"
 description = "MAX-бот: показывает ID пользователей, чатов, пересланных сообщений и контактов"
 requires-python = ">=3.12"
 dependencies = [
-    "maxapi",          # проверенный командой MAX форк библиотеки Bot API
-    "python-dotenv",   # загрузка .env
+    "maxapi>=1.2.1,<2", # проверенный командой MAX форк библиотеки Bot API
+    "python-dotenv>=1.2.2,<2", # загрузка .env
 ]
 
 [project.optional-dependencies]
-webhook = ["maxapi[webhook]"]  # fastapi + uvicorn для режима вебхука
+# Режим webhook работает и без этой экстры: maxapi поднимает сервер на aiohttp,
+# который входит в его основные зависимости. Экстра нужна только тем, кто хочет
+# вместо aiohttp использовать бэкенд на FastAPI.
+fastapi = ["maxapi[webhook]>=1.2.1,<2"]
 
 [dependency-groups]
 dev = [
-    "ruff",
-    "pytest",
-    "pytest-asyncio",
+    "ruff>=0.15.22,<0.16",
+    "pytest>=9.1.1,<10",
+    "pytest-asyncio>=1.4.0,<2",
 ]
 
 [project.scripts]
