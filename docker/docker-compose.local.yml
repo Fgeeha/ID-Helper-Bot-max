@@ -18,6 +18,12 @@ services:
       - ../.env
     environment:
       LOG_LEVEL: ${LOG_LEVEL:-DEBUG}
+      # Внутри контейнера порт фиксирован: наружу его публикует секция ports.
+      WEBHOOK_HOST: 0.0.0.0
+      WEBHOOK_PORT: 8080
+    # Нужно только при BOT_MODE=webhook; в режиме polling порт просто не слушается.
+    ports:
+      - "8080:8080"
     restart: "no"
     # compose watch: синхронизируем исходники без пересборки,
     # пересобираем образ только при изменении зависимостей

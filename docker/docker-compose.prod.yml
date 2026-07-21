@@ -17,6 +17,13 @@ services:
       - ../.env
     environment:
       LOG_LEVEL: ${LOG_LEVEL:-INFO}
+      # Внутри контейнера порт фиксирован: наружу его публикует секция ports.
+      WEBHOOK_HOST: 0.0.0.0
+      WEBHOOK_PORT: 8080
+    # Нужно только при BOT_MODE=webhook. Слушаем локальный интерфейс: HTTPS
+    # терминирует реверс-прокси, он же проксирует запросы на этот порт.
+    ports:
+      - "127.0.0.1:8080:8080"
     restart: always
     stop_grace_period: 15s
     # прод-хардненинг

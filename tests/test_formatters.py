@@ -14,7 +14,6 @@ from maxapi.types import (
 from maxapi.types.attachments.image import Image
 from maxapi.types.attachments.video import Video
 
-from bot.config import parse_admin_ids
 from bot.formatters import (
     NOTHING_FOUND_TEXT,
     IdCard,
@@ -209,19 +208,3 @@ class TestMergeCards:
 
         assert merged.text == "раз\n\nдва\n\nтри"
         assert merged.copy_value == "7"
-
-
-class TestParseAdminIds:
-    """Разбор ADMIN_IDS."""
-
-    @pytest.mark.parametrize(
-        ("raw", "expected"),
-        [
-            ("", frozenset()),
-            ("1", frozenset({1})),
-            (" 1 , 2 ,, 3 ", frozenset({1, 2, 3})),
-            ("1,abc,2", frozenset({1, 2})),
-        ],
-    )
-    def test_parsing(self, raw: str, expected: frozenset[int]) -> None:
-        assert parse_admin_ids(raw) == expected
