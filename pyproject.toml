@@ -1,0 +1,50 @@
+[project]
+name = "max-id-bot"
+version = "0.1.0"
+description = "MAX-бот: показывает ID пользователей, чатов, пересланных сообщений и контактов"
+requires-python = ">=3.12"
+dependencies = [
+    "maxapi",          # проверенный командой MAX форк библиотеки Bot API
+    "python-dotenv",   # загрузка .env
+]
+
+[project.optional-dependencies]
+webhook = ["maxapi[webhook]"]  # fastapi + uvicorn для режима вебхука
+
+[dependency-groups]
+dev = [
+    "ruff",
+    "pytest",
+    "pytest-asyncio",
+]
+
+[project.scripts]
+max-id-bot = "bot.__main__:cli"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/bot"]
+
+[tool.uv]
+package = true
+
+# ── Ruff ─────────────────────────────────────────────────────────────────────
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+src = ["src"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM"]
+
+[tool.ruff.lint.isort]
+known-first-party = ["bot"]
+
+# ── Pytest ───────────────────────────────────────────────────────────────────
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+asyncio_mode = "auto"
+testpaths = ["tests"]

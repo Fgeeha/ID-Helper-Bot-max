@@ -1,0 +1,45 @@
+# Прод-развёртывание.
+# Запуск из корня репозитория:
+#   docker compose -f docker/docker-compose.prod.yml up -d --build
+#
+# Отличия от local: перезапуск always, лимиты ресурсов, ротация логов,
+# без bind-mount исходников (образ самодостаточный), без watch.
+
+name: max-id-bot-prod
+
+services:
+  bot:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    image: max-id-bot:prod
+    env_file:
+      - ../.env
+    environment:
+      LOG_LEVEL: ${LOG_LEVEL:-INFO}
+    restart: always
+    stop_grace_period: 15s
+    # прод-хардненинг
+    read_only: true
+    security_opt:
+      - no-new-privileges:true
+    tmpfs:
+      - /tmp
+    deploy:
+      resources:
+        limits:
+          cpus: "0.50"
+          memory: 256M
+        reservations:
+          memory: 128M
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "5"
+    healthcheck:
+      test: ["CMD", "python", "-c", "import bot"]
+      interval: 30s
+      timeout: 5s
+      start_period: 10s
+      retries: 3

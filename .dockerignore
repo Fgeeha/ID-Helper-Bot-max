@@ -1,0 +1,26 @@
+# .venv платформо-зависим — собираем в образе с нуля (требование uv)
+.venv/
+**/__pycache__/
+*.pyc
+*.pyo
+
+# секреты и локальное
+.env
+.env.*
+!.env.example
+
+# git и CI
+.git/
+.gitignore
+.github/
+
+# инструментальные кэши
+.ruff_cache/
+.pytest_cache/
+.mypy_cache/
+
+# документация и мусор, не нужный в образе
+README.md
+*.md
+!pyproject.toml
+.DS_Store

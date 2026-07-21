@@ -1,0 +1,19 @@
+# окружение и секреты
+.env
+.env.*
+!.env.example
+
+# Python
+.venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+
+# ОС/редактор
+.DS_Store
+.idea/
+.vscode/
+.claude/

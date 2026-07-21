@@ -1,0 +1,35 @@
+# Локальная разработка.
+# Запуск из корня репозитория:
+#   docker compose -f docker/docker-compose.local.yml up --build
+# Для авто-перезапуска при изменении кода:
+#   docker compose -f docker/docker-compose.local.yml watch
+#
+# build-context — корень репозитория (..), а не папка docker/.
+
+name: max-id-bot-local
+
+services:
+  bot:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    image: max-id-bot:local
+    env_file:
+      - ../.env
+    environment:
+      LOG_LEVEL: ${LOG_LEVEL:-DEBUG}
+    restart: "no"
+    # compose watch: синхронизируем исходники без пересборки,
+    # пересобираем образ только при изменении зависимостей
+    develop:
+      watch:
+        - action: sync+restart
+          path: ../src
+          target: /app/src
+          ignore:
+            - .venv/
+            - "**/__pycache__/"
+        - action: rebuild
+          path: ../pyproject.toml
+        - action: rebuild
+          path: ../uv.lock
