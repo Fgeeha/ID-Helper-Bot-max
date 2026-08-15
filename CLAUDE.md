@@ -149,7 +149,7 @@ Src-layout обязателен. Пакет — `bot`, запуск — `python 
    `make lint` и `make test` (или напрямую `uv run ruff check .`,
    `uv run pytest -q`). Не игнорируй красные тесты.
 4. **Docker меняешь — проверь сборку.** После правок Dockerfile или compose
-   собери образ (`make build`) и, если возможно, подними локальный стек.
+   собери образ (`make build-local`) и, если возможно, подними локальный стек.
 5. **Сверяйся с библиотекой, а не с памятью.** Перед использованием
    незнакомого метода/поля `maxapi` — импортируй и посмотри реальную сигнатуру
    (`python -c "from maxapi.types import X; print(X.model_fields)"`).
@@ -166,12 +166,12 @@ Src-layout обязателен. Пакет — `bot`, запуск — `python 
 - `make install` — `uv sync` (создать/обновить окружение из лок-файла)
 - `make run` — локальный запуск бота без Docker (`uv run python -m bot`)
 - `make lint` — `uv run ruff check .`
-- `make fmt` — `uv run ruff format .`
+- `make format` — `uv run ruff format .`
 - `make test` — `uv run pytest -q`
-- `make build` — собрать Docker-образ
-- `make up` / `make down` — поднять/остановить **локальный** стек
+- `make build-local` — собрать Docker-образ
+- `make up-local` / `make down-local` — поднять/остановить **локальный** стек
 - `make logs` — логи локального стека
-- `make prod-up` / `make prod-down` — прод-стек
+- `make up-prod` / `make down-prod` — прод-стек
 - `make lock` — пересобрать `uv.lock` (`uv lock`)
 - `make clean` — убрать кэши и артефакты
 
@@ -197,7 +197,7 @@ Src-layout обязателен. Пакет — `bot`, запуск — `python 
 ## Definition of Done
 
 - Код проходит `make lint` и `make test`.
-- Бот стартует локально (`make run`) и в Docker (`make up`).
+- Бот стартует локально (`make run`) и в Docker (`make up-local`).
 - Нет секретов в коде и в истории git.
 - `uv.lock` актуален и закоммичен.
 - README и `.env.example` отражают текущее состояние.
