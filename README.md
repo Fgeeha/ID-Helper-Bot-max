@@ -40,14 +40,14 @@ make run
 ## Docker
 
 ```bash
-make up          # локальный стек (detached)
+make up-local    # локальный стек (detached)
 make watch       # локальный стек с авто-перезапуском на изменение кода
 make logs        # логи
-make down        # остановить
+make down-local  # остановить
 
-make prod-up     # прод-стек
-make prod-logs
-make prod-down
+make up-prod     # прод-стек
+make logs-prod
+make down-prod
 ```
 
 ## Режимы работы
@@ -117,7 +117,7 @@ src/bot/
 
 ```bash
 make check   # ruff check + pytest
-make fmt     # ruff format
+make format  # ruff format
 make lock    # пересобрать uv.lock
 ```
 
